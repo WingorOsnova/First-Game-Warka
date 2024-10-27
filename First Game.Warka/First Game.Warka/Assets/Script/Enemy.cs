@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     Animator anim;
     [SerializeField] int health;
     [SerializeField] float stopDistance,distanceToRunOut, speed;
-    Player player;
+    protected Player player;
     SpriteRenderer spR;
     [SerializeField] GameObject hitEffect;
     bool isDeath = false;
@@ -32,13 +32,13 @@ public class Enemy : MonoBehaviour
     }
     public virtual void Update()
     {
-        if(isDeath) return;
+        if(isDeath || !player) return;
         Scale(player.transform.position);
     }
 
     public void Damage(int damage)
     {
-        if (isDeath) return;
+        if (isDeath ) return;
         health -= damage;
 
         Instantiate(hitEffect, transform.position, Quaternion.identity);
@@ -49,14 +49,14 @@ public class Enemy : MonoBehaviour
      private void FixedUpdate()
     {
         if (isDeath) return;
-        if (Vector2.Distance(transform.position, player.transform.position) > stopDistance)
+        if (player && Vector2.Distance(transform.position, player.transform.position) > stopDistance)
         {
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position + addRandPosToGO, speed * Time.fixedDeltaTime);
             anim.SetBool("run", true);
             canAttack = false ;
 
         }
-        else if (Vector2.Distance(transform.position, player.transform.position) < distanceToRunOut)
+        else if(player && Vector2.Distance(transform.position, player.transform.position) < distanceToRunOut)
         {
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position + addRandPosToGO, -speed * Time.fixedDeltaTime);
             anim.SetBool("run", true);
@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
 
     IEnumerator SetRandomPos()
     { 
-        addRandPosToGO = new Vector3(Random.Range(-2, 2), Random.Range(-2, 2));
+        addRandPosToGO = new Vector3(Random.Range(-stopDistance + 0.1f, stopDistance - 0.1f), Random.Range(-stopDistance + 0.1f, stopDistance - 0.1f));
         yield return new WaitForSeconds(1.5f);
         StartCoroutine(nameof(SetRandomPos));   
     }
@@ -88,7 +88,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    void Death()
+   protected void Death()
     {
         isDeath = true;
         anim.SetTrigger("death");
@@ -109,6 +109,6 @@ public class Enemy : MonoBehaviour
 
     public virtual bool CheckIfCanAttack()
     { 
-        return canAttack;
+        return canAttack && !isDeath;
     }
 }

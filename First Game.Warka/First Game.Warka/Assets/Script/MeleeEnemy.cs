@@ -19,7 +19,7 @@ public class MeleeEnemy : Enemy
 
         timer += Time.deltaTime;
 
-        if (CheckIfCanAttack())
+        if (CheckIfCanAttack() && player)
         {
 
             if (timer >= timeBtwAttack)
@@ -33,6 +33,7 @@ public class MeleeEnemy : Enemy
 
     IEnumerator Attack()
     {
+       
         Player.instance.Damage(damage);
         Vector2 origPos = transform.position;
         Vector2 plPos = Player.instance.transform.position;

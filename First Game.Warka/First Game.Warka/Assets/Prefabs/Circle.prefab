@@ -155,7 +155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3599394324881855435}
   - component: {fileID: 8350584423846746565}
-  - component: {fileID: 7486536790106156855}
+  - component: {fileID: 1808557050648865815}
   - component: {fileID: 9097500585268345640}
   - component: {fileID: 865388647794397125}
   m_Layer: 0
@@ -233,8 +233,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7486536790106156855
-CircleCollider2D:
+--- !u!70 &1808557050648865815
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -265,9 +265,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  m_Offset: {x: -0.08, y: 1.51}
+  m_Size: {x: 4.15, y: 7.05}
+  m_Direction: 0
 --- !u!50 &9097500585268345640
 Rigidbody2D:
   serializedVersion: 4
@@ -307,5 +307,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d200a55593f0546b89d61e7b20d824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spR: {fileID: 0}
-  timer: 0
+  speed: 0
+  health: 0
+  bullet: {fileID: 0}
+  shootpos: {fileID: 0}
+  timeBtwShoot: 2
+  text: {fileID: 0}
+  hitEffect: {fileID: 0}
+  spritesMuzzleFlash: []
+  muzzleFlashSpr: {fileID: 0}
