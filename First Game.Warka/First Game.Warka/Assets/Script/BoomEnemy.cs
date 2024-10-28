@@ -7,6 +7,7 @@ public class BoomEnemy : Enemy
     [SerializeField] float attackRadius;
     [SerializeField] LayerMask whatIsPlayer;
     [SerializeField] int damage;
+    [SerializeField] GameObject boomEffect;
     public override void Update()
     {
         base.Update();
@@ -23,6 +24,7 @@ public class BoomEnemy : Enemy
         {
             item?.GetComponent<Player>()?.Damage(damage);
         }
+        Instantiate(boomEffect, transform.position, Quaternion.identity);
         
         Death();
     }

@@ -52,3 +52,6 @@ TagManager:
   - name: fist.layer
     uniqueID: 2957033155
     locked: 0
+  - name: StatsBar
+    uniqueID: 3082422981
+    locked: 0

@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] float speed;
-    [SerializeField] float health;
+    [SerializeField] int health;
+    int maxHealth;
     Rigidbody2D rb;
     Vector2 moveVelicity;
     [SerializeField] GameObject bullet;
@@ -23,6 +25,12 @@ public class Player : MonoBehaviour
 
     [SerializeField] Sprite[] spritesMuzzleFlash;
     [SerializeField] SpriteRenderer muzzleFlashSpr;
+    [SerializeField] float dashForce, timeBtwDash, dashTime;
+    float dashTimer;
+    bool isDashing = false;
+
+    [SerializeField] Slider healthBar;
+    [SerializeField] Slider dashthBar;
 
 
     private void Awake()
@@ -36,6 +44,9 @@ public class Player : MonoBehaviour
         spR = GetComponent<SpriteRenderer>();
         
         shootTimer = timeBtwShoot;
+        dashTimer = timeBtwDash;
+        maxHealth = health;
+        UpdateHealthUI();
     }
 
     void Update()
@@ -48,6 +59,18 @@ public class Player : MonoBehaviour
 
         }
 
+        dashTimer += Time.deltaTime;
+        dashthBar.value =  dashTimer / timeBtwDash;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (dashTimer >= timeBtwDash)
+            { 
+                dashTimer = 0;
+                ActivateDash();
+            }
+        }
+
         if (timeBtwShoot - shootTimer < 0) return;
         text.text = ((int)
             ((timeBtwShoot - shootTimer)
@@ -58,7 +81,24 @@ public class Player : MonoBehaviour
     #region Base Function move  
     private void FixedUpdate()
     {
-        Move(); 
+        Move();
+
+        if (isDashing) Dash();
+    }
+    void Dash()
+    {
+        rb.AddForce(moveVelicity * Time.fixedDeltaTime * dashForce * 100);
+    }
+    void ActivateDash()
+    { 
+        isDashing = true;
+
+        Invoke(nameof(DeActivateDash), dashTime);
+    }
+    void DeActivateDash()
+    {
+        isDashing = false;
+        
     }
     void Move()
     {
@@ -115,10 +155,17 @@ public class Player : MonoBehaviour
 
         camerafollow.instance.CamShake();
 
+        UpdateHealthUI();
+
         if (health <= 0) Destroy(gameObject);
         
 
     }
+
+    void UpdateHealthUI()
+    {
+        healthBar.value = (float)health / maxHealth;
+    }    
 }
 
 
