@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7299594367892804117}
   - component: {fileID: 5940006763351115416}
   - component: {fileID: 848891176822641808}
-  - component: {fileID: -934521405790788325}
+  - component: {fileID: -8465549565111851665}
   m_Layer: 0
-  m_Name: HitEffectEnemy
+  m_Name: HitEftEnemyGreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,8 +223,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.5176471, g: 0.27058825, b: 0.5921569, a: 1}
-      maxColor: {r: 0.73333335, g: 0.3803922, b: 0.85098046, a: 1}
+      minColor: {r: 0.3647059, g: 0.427451, b: 0.19215688, a: 1}
+      maxColor: {r: 0.75294125, g: 0.87843144, b: 0.38823533, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4889,7 +4889,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-934521405790788325
+--- !u!114 &-8465549565111851665
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

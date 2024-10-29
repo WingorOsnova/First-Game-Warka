@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     bool canAttack = false;
 
     Vector3 addRandPosToGO;
+    [SerializeField] ParticleSystem footParticale;
+    [SerializeField] int minCoinsAdd, maxCoinsAdd;
     public virtual void Start()
     {
        rb = GetComponent<Rigidbody2D>();
@@ -53,6 +55,13 @@ public class Enemy : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position + addRandPosToGO, speed * Time.fixedDeltaTime);
             anim.SetBool("run", true);
+
+            footParticale.Pause();
+            footParticale.Play();
+
+            var emission = footParticale.emission;
+
+            emission.rateOverTime = 10;
             canAttack = false ;
 
         }
@@ -60,12 +69,24 @@ public class Enemy : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position + addRandPosToGO, -speed * Time.fixedDeltaTime);
             anim.SetBool("run", true);
+
+            footParticale.Pause();
+            footParticale.Play();
+
+            var emission = footParticale.emission;
+
+            emission.rateOverTime = 10;
             canAttack = false;
 
         }
         else
         {
             anim.SetBool("run", false);
+
+
+            var emission = footParticale.emission;
+
+            emission.rateOverTime = 0;
             canAttack = true;
 
         }
@@ -91,6 +112,8 @@ public class Enemy : MonoBehaviour
    protected void Death()
     {
         isDeath = true;
+        Player.instance.AddMoney(Random.Range(minCoinsAdd, maxCoinsAdd));
+        if (PlayerPrefs.GetInt("Position3") == 1) Player.instance.AddHeath(1);
         anim.SetTrigger("death");
     }
 

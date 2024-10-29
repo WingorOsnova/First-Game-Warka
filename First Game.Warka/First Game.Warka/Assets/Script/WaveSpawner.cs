@@ -19,7 +19,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] float timeBtwWaves;
 
     Wave currentwWave;
-    int currentwWaveIndex;
+    [HideInInspector]public int currentwWaveIndex;
     Transform player;
 
     bool isSpawnerFinished = false;
@@ -27,6 +27,8 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] TextMeshProUGUI waveText;
     bool isFreeTime = true;
     float curttimeBtwWaves;
+
+    [SerializeField] GameObject spawnEffect;
     private void Start()
     {
         player = Player.instance.transform;
@@ -80,6 +82,8 @@ public class WaveSpawner : MonoBehaviour
             Transform randomSpawnPont = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
             Instantiate(randomEnemy, randomSpawnPont.position, Quaternion.identity);
+            Instantiate(spawnEffect, randomSpawnPont.position, Quaternion.identity);
+
             if (i == currentwWave.count - 1)
             { 
                 isSpawnerFinished |= true;

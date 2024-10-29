@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] int damage;
     [System.Serializable]
 
+
     public enum Type
     {
         Player,
@@ -39,7 +40,8 @@ public class Bullet : MonoBehaviour
         }
         if (collision.gameObject.tag == "Enemy" && type == Type.Player)
         {
-            collision.gameObject.GetComponent<Enemy>().Damage(damage);     
+            int damagee = PlayerPrefs.GetInt("Position0") == 1 ? damage += 2 : damage;
+            collision.gameObject.GetComponent<Enemy>().Damage(damagee);     
             Death();
         }
         if (collision.gameObject.tag == "Player" && type == Type.Enemy)
