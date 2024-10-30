@@ -14,7 +14,11 @@ public class Shop : MonoBehaviour
     [SerializeField] int[] prises;
     [SerializeField] GameObject shopPanel;
     public delegate void BuySeconPosition();
+    public delegate void BuySeconPositionDash();
+
     public event BuySeconPosition buySeconPosition;
+    public event BuySeconPositionDash buySeconPositionDash;
+
     public static Shop instance;
 
     private void Awake()
@@ -36,7 +40,9 @@ public class Shop : MonoBehaviour
                     buyButtons[i].interactable = false;
                     boughtTexts[i].text = "Купленно";
 
-                    if (i == 2) buySeconPosition.Invoke();                                                               
+                    if (i == 2) buySeconPosition.Invoke();
+                    if (i == 4) buySeconPositionDash.Invoke();
+
                 }
             }
         }
@@ -59,7 +65,6 @@ public class Shop : MonoBehaviour
     {
         for (int i = 0; i < buyButtons.Length; i++)
         {
-            if (PlayerPrefs.GetInt("Position" + i) == 1) break;
             if (Player.instance.currentMoney < prises[i])
             {
                 buyButtons[i].interactable = false;
@@ -70,6 +75,12 @@ public class Shop : MonoBehaviour
                 buyButtons[i].interactable = true;
                 boughtTexts[i].text = "Купить";
             }
+            if (PlayerPrefs.GetInt("Position" + i) == 1)
+            {
+                buyButtons[i].interactable = false;
+                boughtTexts[i].text = "Купленно";
+            }
+
         }
     }
     public void Buy(int index)
@@ -82,7 +93,10 @@ public class Shop : MonoBehaviour
         PlayerPrefs.SetInt("Position" + index, 1);
 
         if (index == 2) buySeconPosition.Invoke();
-     }
+        if (index == 4) buySeconPositionDash.Invoke();
+        Player.instance.AddMoney(- prises[index]);
+        Check();
+    }
     [ContextMenu("Delete Player Prefs")]
     void DeletePlayerPrefs() => PlayerPrefs.DeleteAll();
     

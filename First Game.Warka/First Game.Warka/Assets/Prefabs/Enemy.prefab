@@ -5176,7 +5176,7 @@ MonoBehaviour:
   speed: 8
   hitEffect: {fileID: 1705305166031820556, guid: 62b24dce0d292eb4dad14a97577d19cd, type: 3}
   footParticale: {fileID: 2857909800831769964}
-  minCoinsAdd: 8
+  minCoinsAdd: 10
   maxCoinsAdd: 15
   timeBtwAttack: 0.5
   attackSpeed: 3

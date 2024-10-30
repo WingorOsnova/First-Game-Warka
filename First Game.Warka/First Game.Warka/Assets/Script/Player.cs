@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     SpriteRenderer spR;
 
     [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI Supertext;
 
     public static Player instance;
     [SerializeField] GameObject hitEffect;
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
         instance = this;
 
         Shop.instance.buySeconPosition += UpdateTimeBtwShoot;
+        Shop.instance.buySeconPositionDash += UpdateTimeBtwDash;
 
     }
     void Start()
@@ -92,9 +94,9 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (timeBtwShoot - shootTimer < 0) return;
+        if (timeBtwSuperShoot - shootSuperTimer < 0) return;
         text.text = ((int)
-            ((timeBtwShoot - shootTimer)
+            ((timeBtwSuperShoot - shootSuperTimer)
             * 100)
             / 100f).ToString();
 
@@ -113,6 +115,10 @@ public class Player : MonoBehaviour
     {
         timeBtwShoot -= 0.3f;
         timeBtwSuperShoot -= 2.0f;
+    }
+    void UpdateTimeBtwDash()
+    {
+        timeBtwDash -= 2.0f;
     }
     void Dash()
     {
