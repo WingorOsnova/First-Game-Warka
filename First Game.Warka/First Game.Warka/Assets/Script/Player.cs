@@ -8,7 +8,7 @@ using TMPro;
 public class Player : MonoBehaviour
 {
     [SerializeField] float speed;
-    [SerializeField] int health;
+    [SerializeField]  int health;
     int maxHealth;
     Rigidbody2D rb;
     Vector2 moveVelicity;
@@ -43,6 +43,9 @@ public class Player : MonoBehaviour
     bool canBEDamage = true;
     [SerializeField] ParticleSystem footParticale;
     [SerializeField] GameObject deathPanel;
+    [SerializeField] AudioClip shootClip,suoerShootClip, heartClip, deathClip, dashSound;
+    [SerializeField] AudioClip[] footClip;
+    AudioSource audS;
 
 
     private void Awake()
@@ -58,6 +61,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spR = GetComponent<SpriteRenderer>();
+        audS = GetComponent<AudioSource>();
+
 
         shootTimer = timeBtwShoot;
         dashTimer = timeBtwDash;
@@ -128,6 +133,7 @@ public class Player : MonoBehaviour
     {
         isDashing = true;
         canBEDamage = false;
+        SoundManager.instance.PlayerSound(dashSound);
 
         Invoke(nameof(DeActivateDash), dashTime);
     }
@@ -153,6 +159,12 @@ public class Player : MonoBehaviour
             var emission = footParticale.emission;
 
             emission.rateOverTime = 10;
+
+            if (!audS.isPlaying)
+            {
+                audS.clip = footClip[Random.Range(0, footClip.Length)];
+                audS.Play();
+            }
         }
         else
         {
@@ -162,6 +174,7 @@ public class Player : MonoBehaviour
 
             emission.rateOverTime = 0;
         }
+
 
         ScalePlayer(moveInput.x);
 
@@ -181,6 +194,9 @@ public class Player : MonoBehaviour
     void Shoot()
     {
         Instantiate(bullet, shootPos.position, shootPos.rotation);
+
+        SoundManager.instance.PlayerSound(shootClip);
+
         StartCoroutine(nameof(SetMuzzleFlash));
     }
     void SuperShoot()
@@ -189,8 +205,10 @@ public class Player : MonoBehaviour
         {
             Instantiate(bullet, shootSuperPos[i].position, shootSuperPos[i].rotation);
         }
-        
+        SoundManager.instance.PlayerSound(shootClip);
+
         camerafollow.instance.CamShake();
+        SoundManager.instance.PlayerSound(suoerShootClip);
 
         StartCoroutine(nameof(SetMuzzleFlash));
     }
@@ -213,11 +231,14 @@ public class Player : MonoBehaviour
         Instantiate(hitEffect, transform.position, Quaternion.identity);
 
         camerafollow.instance.CamShake();
+        SoundManager.instance.PlayerSound(heartClip);
 
         UpdateHealthUI();
 
-        if (health <= 0)
+        if (health <= 0 && deathPanel.activeInHierarchy == false)
         {
+            SoundManager.instance.PlayerSound(deathClip);
+
             deathPanel.SetActive(true);
             Destroy(gameObject);
 

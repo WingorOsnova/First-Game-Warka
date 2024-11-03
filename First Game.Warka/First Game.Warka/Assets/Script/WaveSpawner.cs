@@ -29,6 +29,7 @@ public class WaveSpawner : MonoBehaviour
     float curttimeBtwWaves;
 
     [SerializeField] GameObject spawnEffect;
+
     private void Start()
     {
         player = Player.instance.transform;

@@ -20,10 +20,12 @@ public class Shop : MonoBehaviour
     public event BuySeconPositionDash buySeconPositionDash;
 
     public static Shop instance;
+    [SerializeField] AudioClip popSound, succesBuy;
 
     private void Awake()
     {
-        instance = this;
+        DeletePlayerPrefs();
+          instance = this;
     }
     private void Start()
     {
@@ -55,8 +57,11 @@ public class Shop : MonoBehaviour
             shopPanel.SetActive(!shopPanel.activeInHierarchy); 
             Check();
 
-            if (shopPanel.activeInHierarchy) Time.timeScale = 0;
+            SoundManager.instance.PlayerSound(popSound);
+
+            if (shopPanel.activeInHierarchy) Time.timeScale = 0; 
             else Time.timeScale = 1;
+
 
         }
     }
@@ -89,6 +94,9 @@ public class Shop : MonoBehaviour
        
         buyButtons[index].interactable = false;
         boughtTexts[index].text = "Купленно";
+
+        SoundManager.instance.PlayerSound(succesBuy);
+
 
         PlayerPrefs.SetInt("Position" + index, 1);
 

@@ -19,6 +19,8 @@ public class BoomEnemy : Enemy
 
     void BoomAttack()
     {
+        SoundManager.instance.PlayerSound(attacClip);
+
         Collider2D[] detectedObject = Physics2D.OverlapCircleAll(transform.position, attackRadius, whatIsPlayer);
         foreach (Collider2D item in detectedObject)
         {

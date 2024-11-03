@@ -7,6 +7,8 @@ using TMPro;
 public class DeathPanel : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] AudioClip popSound;
+
     private void Start()
     {
         WaveSpawner wsP = FindObjectOfType<WaveSpawner>();
@@ -14,6 +16,8 @@ public class DeathPanel : MonoBehaviour
     }
     public void Restart()
     {
+        SoundManager.instance.PlayerSound(popSound);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

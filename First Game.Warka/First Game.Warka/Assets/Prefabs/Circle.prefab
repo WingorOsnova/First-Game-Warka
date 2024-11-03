@@ -201,7 +201,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -310,9 +310,21 @@ MonoBehaviour:
   speed: 0
   health: 0
   bullet: {fileID: 0}
-  shootpos: {fileID: 0}
+  shootPos: {fileID: 0}
+  shootSuperPos: []
   timeBtwShoot: 2
+  timeBtwSuperShoot: 2
   text: {fileID: 0}
+  Supertext: {fileID: 0}
   hitEffect: {fileID: 0}
   spritesMuzzleFlash: []
   muzzleFlashSpr: {fileID: 0}
+  dashForce: 0
+  timeBtwDash: 0
+  dashTime: 0
+  healthBar: {fileID: 0}
+  dashthBar: {fileID: 0}
+  footParticale: {fileID: 0}
+  deathPanel: {fileID: 0}
+  currentMoney: 0
+  coinsText: {fileID: 0}

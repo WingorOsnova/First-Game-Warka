@@ -18,6 +18,8 @@ public class Enemy : MonoBehaviour
     Vector3 addRandPosToGO;
     [SerializeField] ParticleSystem footParticale;
     [SerializeField] int minCoinsAdd, maxCoinsAdd;
+    [SerializeField] AudioClip heartClip, deathClip;
+    [SerializeField]protected AudioClip attacClip;
     public virtual void Start()
     {
        rb = GetComponent<Rigidbody2D>();
@@ -44,6 +46,7 @@ public class Enemy : MonoBehaviour
         health -= damage;
 
         Instantiate(hitEffect, transform.position, Quaternion.identity);
+        SoundManager.instance.PlayerSound(heartClip);
 
         if (health <= 0)Death(); 
 
@@ -115,6 +118,8 @@ public class Enemy : MonoBehaviour
         Player.instance.AddMoney(Random.Range(minCoinsAdd, maxCoinsAdd));
         if (PlayerPrefs.GetInt("Position3") == 1) Player.instance.AddHeath(1);
         anim.SetTrigger("death");
+        SoundManager.instance.PlayerSound(deathClip);
+
     }
 
     public IEnumerator DestroyObj()

@@ -33,7 +33,8 @@ public class MeleeEnemy : Enemy
 
     IEnumerator Attack()
     {
-       
+        SoundManager.instance.PlayerSound(attacClip);
+
         Player.instance.Damage(damage);
         Vector2 origPos = transform.position;
         Vector2 plPos = Player.instance.transform.position;
