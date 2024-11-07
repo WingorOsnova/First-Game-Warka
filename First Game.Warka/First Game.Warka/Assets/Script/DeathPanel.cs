@@ -20,4 +20,8 @@ public class DeathPanel : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public void GoToMM()
+    {
+        SceneManager.LoadScene("MM");
+    }
 }
